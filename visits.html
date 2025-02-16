@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Henrique Consultas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>HENRIQUE CONSULTAS</h1>
+        <div id="loginForm">
+            <form onsubmit="handleLogin(event)">
+                <input type="text" name="username" placeholder="Usuário" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = event.target.username.value;
+            const password = event.target.password.value;
+
+            if (username === "admin" && password === "12345") {
+                window.location.href = "dashboard.html"; // Redireciona para a página principal
+            } else {
+                alert("Usuário ou senha incorretos.");
+            }
+        }
+    </script>
+</body>
+</html>

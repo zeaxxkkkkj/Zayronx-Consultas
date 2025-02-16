@@ -1,0 +1,6 @@
+Flask
+PyJWT
+colorama
+cryptography
+requests
+waitress

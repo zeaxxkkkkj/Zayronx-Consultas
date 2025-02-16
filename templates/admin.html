@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo(a) Admin - Consult Center</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F0F2FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .admin-container {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 450px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            background: transparent;
+            color: #333;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        /* Enhanced select for user type */
+        .form-group select {
+            /* Removed background-image for the arrow */
+        }
+
+        .form-group select option[value=""] {
+            color: transparent;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6C63FF;
+            transform: scale(1.01);
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(45deg, #6C63FF, #4E54C8);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .button:active {
+            transform: translateY(0) scale(1);
+        }
+
+        .back-link {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: #6C63FF;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #4E54C8;
+        }
+
+        .back-link::before {
+            content: '←';
+            margin-right: 5px;
+        }
+
+        .alert {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease-in;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .alert-success { background-color: #E3FCEF; color: #155724; border-left: 6px solid #155724; }
+        .alert-error { background-color: #FFEBEE; color: #721C24; border-left: 6px solid #721C24; }
+
+        .view-users {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #6C63FF;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-users:hover {
+            color: #4E54C8;
+            transform: scale(1.05);
+        }
+
+        #sendMessageBtn {
+            position: relative;
+            background: none;
+            border: none;
+            color: #6C63FF;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px auto 0;
+            display: none;
+            text-align: center;
+        }
+
+        #sendMessageBtn:hover {
+            color: #4E54C8;
+            transform: scale(1.05);
+        }
+
+        #usersList {
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+            margin-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 10px;
+        }
+
+        .user-info {
+            background: #F3F4FF;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .user-info:hover {
+            box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .user-info p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .user-info p strong {
+            display: inline-block;
+            width: 120px;
+        }
+
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.4); 
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 30px;
+            border: none;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation-name: animateModal;
+            animation-duration: 0.4s;
+            position: relative;  /* Added for positioning the close button */
+        }
+
+        @keyframes animateModal {
+            from {transform: scale(0.8); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+
+        .modal-content h3 {
+            color: #4E54C8;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .modal input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0 20px;
+            display: inline-block;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal input[type="text"]:focus {
+            border-color: #6C63FF;
+            outline: none;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 24px;  /* Reduced size */
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .modal .button {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h2>Bem-vindo(a) Admin</h2>
+        <button class="view-users" onclick="toggleUsersView()">Ver Usuários</button>
+        <div id="alertContainer">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <form id="adminForm" method="POST" action="/admin">
+            <div class="form-group">
+                <select name="action" id="action" onchange="toggleFields()">
+                    <option value="add_user">Adicionar Usuário</option>
+                    <option value="delete_user">Excluir Usuário</option>
+                    <option value="reset_device">Reiniciar Dispositivo</option>
+                </select>
+            </div>
+            <div id="userFields" class="form-group">
+                <input type="text" name="user" placeholder="Usuário" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <select name="role" id="role">
+                    <option value="" selected></option>
+                    <option value="user_semanal">TIPO: MEMBRO SEMANAL</option>
+                    <option value="user_mensal">TIPO: MEMBRO MENSAL</option>
+                    <option value="user_anual">TIPO: MEMBRO ANUAL</option>
+                    <option value="admin">TIPO: ADMINISTRADOR</option>
+                </select>
+                <input type="date" name="expiration" id="expirationField" placeholder="Data de Expiração" required>
+            </div>
+            <button type="submit" class="button">Enviar</button>
+        </form>
+
+        <div id="usersList"></div>
+        <button id="sendMessageBtn" onclick="openModal()">Enviar Mensagem</button>
+        <a href="/dashboard" class="back-link">Voltar para o início</a>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h3>Enviar Notificação para Todos</h3>
+            <input type="text" id="notificationMessage" placeholder="Mensagem para todos os usuários">
+            <button class="button" onclick="sendNotificationToAll()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleFields() {
+            var action = document.getElementById('action').value;
+            var expirationField = document.getElementById('expirationField');
+            var roleField = document.getElementById('role');
+            if (action === 'delete_user' || action === 'reset_device') {
+                expirationField.style.display = 'none';
+                expirationField.removeAttribute('required');
+                roleField.style.display = 'none';
+                roleField.removeAttribute('required');
+            } else {
+                expirationField.style.display = 'block';
+                expirationField.setAttribute('required', 'required');
+                roleField.style.display = 'block';
+                roleField.setAttribute('required', 'required');
+            }
+        }
+
+        document.getElementById('adminForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            fetch('/admin', {
+                method: 'POST',
+                body: new FormData(event.target),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    flash(data.message, data.category || 'success');
+                    if (data.category === 'success' && data.user && data.password && data.token && data.expiration) {
+                        flash(`Usuário: ${data.user}\n\nSenha: ${data.password}\n\nToken: ${data.token}\n\nExpiração: ${data.expiration}\n\nTipo: ${data.role}`, 'success');
+                    }
+                }
+                event.target.reset();
+            })
+            .catch(error => {
+                flash('Erro ao processar o pedido: ' + error.message, 'error');
+            });
+        });
+
+        function flash(message, category) {
+            var alertContainer = document.getElementById('alertContainer');
+            var alert = document.createElement('div');
+            alert.className = `alert alert-${category}`;
+            alert.textContent = message;
+            alertContainer.appendChild(alert);
+        }
+
+        let usersVisible = false;
+
+        function toggleUsersView() {
+            var usersList = document.getElementById('usersList');
+            var sendMessageBtn = document.getElementById('sendMessageBtn');
+            if (usersVisible) {
+                usersList.style.display = 'none';
+                sendMessageBtn.style.display = 'none';
+                usersVisible = false;
+            } else {
+                fetch('/admin', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        action: 'view_users'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    usersList.innerHTML = '';  
+                    Object.entries(data.users).forEach(([user, data]) => {
+                        if (user !== 'admin7k') {
+                            var userInfo = document.createElement('div');
+                            userInfo.className = 'user-info';
+                            userInfo.innerHTML = `
+                                <p><strong>Usuário:</strong> ${user}</p>
+                                <p><strong>Senha:</strong> ${data.password}</p>
+                                <p><strong>Token:</strong> ${data.token}</p>
+                                <p><strong>Expiração:</strong> ${data.expiration}</p>
+                                <p><strong>Tipo:</strong> ${data.role === 'user_semanal' ? 'semanal' : 
+                                                           data.role === 'user_mensal' ? 'mensal' : 
+                                                           data.role === 'user_anual' ? 'anual' : 
+                                                           data.role === 'admin' ? 'admin' : data.role}</p>
+                                <p><strong>Dispositivos:</strong> ${data.devices ? data.devices.join(', ') : "Ilimitado"}</p>
+                            `;
+                            usersList.appendChild(userInfo);
+                        }
+                    });
+                    usersList.style.display = 'block';
+                    sendMessageBtn.style.display = 'block';
+                    usersVisible = true;
+                })
+                .catch(error => {
+                    flash('Erro ao carregar informações dos usuários: ' + error.message, 'error');
+                });
+            }
+        }
+
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        function openModal() {
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        span.onclick = function() {
+            closeModal();
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        function sendNotificationToAll() {
+            var message = document.getElementById('notificationMessage').value;
+            if (!message) {
+                flash('Por favor, insira uma mensagem.', 'error');
+                return;
+            }
+            fetch('/admin', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    action: 'send_message',
+                    user: 'all',  
+                    message: '| ' + message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    flash(data.message, data.category || 'success');
+                    closeModal();
+                }
+            })
+            .catch(error => {
+                flash('Erro ao enviar notificação: ' + error.message, 'error');
+            });
+        }
+    </script>
+</body>
+</html>
