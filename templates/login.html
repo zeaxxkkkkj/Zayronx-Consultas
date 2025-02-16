@@ -20,14 +20,16 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(to bottom right, #000428, #004e92);
+            background: linear-gradient(-45deg, #000428, #004e92, #000428, #004e92);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
             color: #fff;
-            animation: fadeIn 1s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .login-container {
@@ -109,24 +111,6 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .alert {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            text-align: left;
-            font-size: 14px;
-        }
-
-        .alert-error {
-            background-color: #ff4c4c;
-            color: #fff;
-        }
-
-        .alert-success {
-            background-color: #28a745;
-            color: #fff;
-        }
-
         .signup-text {
             margin-top: 20px;
             font-size: 14px;
@@ -142,50 +126,11 @@
         .signup-text a:hover {
             text-decoration: underline;
         }
-
-        .show-password {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            cursor: pointer;
-            color: #ccc;
-        }
-
-        .show-password input[type="checkbox"] {
-            display: none;
-        }
-
-        .show-password label::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            width: 20px;
-            height: 20px;
-            background: #1c1c1c;
-            border: 2px solid #00aaff;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .show-password input[type="checkbox"]:checked + label::before {
-            background: #00aaff;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px;
-                border-radius: 10px;
-            }
-
-            h2 {
-                font-size: 22px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>LOGIN</h2>
+        <h2>Entrar</h2>
         <form method="POST" action="/">
             <div class="form-group">
                 <input type="text" id="user" name="user" required>
@@ -195,21 +140,11 @@
                 <input type="password" id="password" name="password" required>
                 <label for="password">Senha</label>
             </div>
-            <div class="show-password">
-                <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()">
-                <label for="showPassword">Mostrar Senha</label>
-            </div>
             <button type="submit" class="button">Login</button>
         </form>
         <div class="signup-text">
             Ainda não tem acesso? <a href="/planos">Veja nossos planos disponíveis <i class="fas fa-external-link-alt"></i></a>
         </div>
     </div>
-    <script>
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById('password');
-            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
-        }
-    </script>
 </body>
 </html>
