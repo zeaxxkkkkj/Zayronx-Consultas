@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Consult Center</title>
+    <title>Login - ZayronX Consultas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
@@ -20,36 +20,37 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(to bottom right, #4e54c8, #8f94fb);
-            animation: fadeIn 1s ease-in-out;
+            background: #121212;
+            color: #fff;
+            overflow: hidden;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Vídeo de fundo */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(40%);
         }
 
         .login-container {
-            background: #ffffff;
+            background: rgba(0, 0, 0, 0.8);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             padding: 40px;
             width: 100%;
             max-width: 400px;
             text-align: center;
             position: relative;
-            overflow: hidden;
-            animation: slideUp 0.8s ease-in-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            backdrop-filter: blur(10px);
         }
 
         h2 {
-            color: #333;
+            color: #fff;
             margin-bottom: 30px;
             font-size: 24px;
             font-weight: 600;
@@ -64,11 +65,10 @@
             width: 100%;
             padding: 12px;
             border: none;
-            border-bottom: 2px solid #ccc;
+            border-bottom: 2px solid #666;
             background: transparent;
-            color: #333;
+            color: #fff;
             font-size: 16px;
-            transition: border-color 0.3s ease;
         }
 
         .form-group input:focus {
@@ -80,7 +80,7 @@
             position: absolute;
             top: 12px;
             left: 0;
-            color: #999;
+            color: #bbb;
             pointer-events: none;
             transition: 0.2s ease all;
         }
@@ -94,47 +94,19 @@
 
         .button {
             width: 100%;
-            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            background: linear-gradient(to right, #6a11cb, #2575fc);
             border: none;
             color: white;
             padding: 15px;
             border-radius: 25px;
             font-size: 16px;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .button:active {
-            transform: translateY(0);
-        }
-
-        .alert {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            text-align: left;
-            font-size: 14px;
-        }
-
-        .alert-error {
-            background-color: #f2dede;
-            color: #a94442;
-        }
-
-        .alert-success {
-            background-color: #dff0d8;
-            color: #3c763d;
         }
 
         .signup-text {
             margin-top: 20px;
             font-size: 14px;
-            color: #666;
+            color: #bbb;
         }
 
         .signup-text a {
@@ -142,111 +114,16 @@
             text-decoration: none;
             font-weight: 600;
         }
-
-        .signup-text a:hover {
-            text-decoration: underline;
-        }
-
-        .signup-text a i {
-            color: inherit;
-        }
-
-        /* Estilo para o checkbox "Mostrar Senha" */
-        .show-password {
-            display: flex;
-            align-items: center;
-            margin-top: -10px;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        .show-password input[type="checkbox"] {
-            display: none;
-        }
-
-        .show-password label {
-            position: relative;
-            padding-left: 30px;
-            color: #666;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-
-        .show-password label::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border: 2px solid #8f94fb;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .show-password label::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 50%;
-            transform: translateY(-50%) rotate(-45deg);
-            width: 10px;
-            height: 5px;
-            border-left: 2px solid #fff;
-            border-bottom: 2px solid #fff;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .show-password input[type="checkbox"]:checked + label::before {
-            background: #8f94fb;
-        }
-
-        .show-password input[type="checkbox"]:checked + label::after {
-            opacity: 1;
-        }
-
-        /* Responsividade */
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px;
-                border-radius: 10px;
-            }
-
-            h2 {
-                font-size: 22px;
-            }
-
-            .form-group input {
-                font-size: 14px;
-            }
-
-            .button {
-                padding: 12px;
-                font-size: 14px;
-            }
-
-            .signup-text {
-                font-size: 12px;
-            }
-        }
     </style>
 </head>
 <body>
+    <video class="video-bg" autoplay loop muted>
+        <source src="https://www.videvo.net/videvo_files/converted/2014_05/preview/Glow_Particles_2_Videvo.mov14222.webm" type="video/webm">
+        Seu navegador não suporta vídeos em HTML5.
+    </video>
+    
     <div class="login-container">
-        <h2>Entrar</h2>
-        <!-- Exibição de mensagens de erro/sucesso -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+        <h2>LOGIN</h2>
         <form method="POST" action="/">
             <div class="form-group">
                 <input type="text" id="user" name="user" required>
@@ -256,26 +133,11 @@
                 <input type="password" id="password" name="password" required>
                 <label for="password">Senha</label>
             </div>
-            
-            <!-- Checkbox "Mostrar Senha" -->
-            <div class="show-password">
-                <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()">
-                <label for="showPassword">Mostrar Senha</label>
-            </div>
-
             <button type="submit" class="button">Login</button>
         </form>
-        <!-- Texto abaixo do botão de login -->
         <div class="signup-text">
             Ainda não tem acesso? <a href="/planos">Veja nossos planos <i class="fas fa-external-link-alt"></i></a>
         </div>
     </div>
-
-    <script>
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById('password');
-            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
-        }
-    </script>
 </body>
 </html>
